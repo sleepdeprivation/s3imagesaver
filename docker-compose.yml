@@ -1,0 +1,33 @@
+version: '3'
+services:
+  api:
+    container_name: "python_api"
+    build: .
+    ports:
+     - "5000:5000"
+    links:
+     - "db:database"
+    volumes:
+     - ./src/api:/code
+  redis:
+    container_name: "python_redis"
+    image: "redis:alpine"
+  db:
+    image: "mongo:3.4.7"
+    container_name: "python_mongo"
+#    ports:
+#     - "27017:27017"
+    volumes:
+     - ./data/db:/data/db
+    environment:
+     - MONGO_DATA_DIR=/data/db
+     - MONGO_LOG_DIR=/dev/null
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+  # frontend:
+  #   image: "nginx:latest"
+  #   container_name: "frontend"
+  #   ports:
+  #    - "3001:80"
+  #    - "3002:443"
+  #   volumes:
+  #    - ./src/frontend:/var/www/
