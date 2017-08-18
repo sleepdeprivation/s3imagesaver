@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_restplus import Resource, Api
 from redis import Redis
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
@@ -15,21 +16,21 @@ def testDB():
     try:
        # The ismaster command is cheap and does not require auth.
        client.admin.command('ismaster')
-       log("successful connection!");
+       log("Mongo connection successfully established!");
     except ConnectionFailure:
-       log("Server not available")
+        log("Mongo connection failed. Raising exception!");
+        raise ConnectionRefusedError("Mongo Server not detected!");
 
 app = Flask(__name__)
+api = Api(app)
 redis = Redis(host='redis', port=6379)
 
-@app.route('/')
-def hello():
-    log("going to test db...");
-    testDB();
-    log("completed db");
-    count = redis.incr('hits')
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+@api.route('/hello')
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
 
 if __name__ == "__main__":
     print("started python script!!!!!...");
+    testDB()
     app.run(host="0.0.0.0", debug=True)
