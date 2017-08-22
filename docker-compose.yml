@@ -23,11 +23,3 @@ services:
      - MONGO_DATA_DIR=/data/db
      - MONGO_LOG_DIR=/dev/null
     command: mongod --smallfiles --logpath=/dev/null # --quiet
-  # frontend:
-  #   image: "nginx:latest"
-  #   container_name: "frontend"
-  #   ports:
-  #    - "3001:80"
-  #    - "3002:443"
-  #   volumes:
-  #    - ./src/frontend:/var/www/

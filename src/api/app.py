@@ -4,6 +4,13 @@ from redis import Redis
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 
+from OpenSSL import SSL
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('/etc/letsencrypt/live/cburke.me/fullchain.pem')
+context.use_certificate_file('/etc/letsencrypt/live/cburke.me/privkey.pem')
+
+from oauth_verify import authorized
+
 import sys
 
 def log(arg):
@@ -27,10 +34,15 @@ redis = Redis(host='redis', port=6379)
 
 @api.route('/hello')
 class HelloWorld(Resource):
-    def get(self):
-        return {'hello': 'world'}
+    @authorized
+    def get(self, userid):
+        return {'hello': userid}
+
 
 if __name__ == "__main__":
     print("started python script!!!!!...");
     testDB()
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True, ssl_context=context)
+
+
+
