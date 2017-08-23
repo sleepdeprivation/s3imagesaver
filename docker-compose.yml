@@ -9,6 +9,10 @@ services:
      - "db:database"
     volumes:
      - ./src/api:/code
+    environment:
+     - S3_BUCKET=${S3_BUCKET}
+     - S3_KEY=${S3_KEY}
+     - S3_SECRET=${S3_SECRET}
   redis:
     container_name: "python_redis"
     image: "redis:alpine"

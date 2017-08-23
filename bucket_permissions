@@ -1,0 +1,15 @@
+# as per https://stackoverflow.com/questions/9558831/how-to-prevent-directory-browsing-of-s3-bucket
+# this should allow those with the link to a file to access it, but with read permissions off globally,
+# people outside should not be able to list the contents of the bucket
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+        "Sid": "AddPerm",
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::cburke.me/*"
+        }
+    ]
+}

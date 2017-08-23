@@ -1,7 +1,0 @@
-flask
-flask-restplus
-redis
-pymongo
-httplib2
-flask-cors
-pyopenssl

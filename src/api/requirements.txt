@@ -4,4 +4,4 @@ redis
 pymongo
 httplib2
 flask-cors
-pyopenssl
+s3fs
