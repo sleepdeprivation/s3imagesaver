@@ -2,7 +2,7 @@ version: '3'
 services:
   api:
     container_name: "python_api"
-    build: ./src/api
+    build: ./src
     ports:
      - "5000:5000"
     links:
@@ -13,6 +13,7 @@ services:
      - S3_BUCKET=${S3_BUCKET}
      - S3_KEY=${S3_KEY}
      - S3_SECRET=${S3_SECRET}
+     - TEST_ENV_VAR=${TEST_ENV_VAR}
   redis:
     container_name: "python_redis"
     image: "redis:alpine"
