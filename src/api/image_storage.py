@@ -17,10 +17,3 @@ class S3ImageStorage():
         with open("assets/testfile.png", "rb") as f:
             bytes = f.read()
         return hashFile(bytes);
-
-    def testBucketCreation(self):
-        s3 = s3fs.S3FileSystem(anon=False, key=os.environ['S3_KEY'], secret=os.environ['S3_SECRET'])
-        with s3.open(os.environ['S3_BUCKET'] + "/testfile_klasjflkjasflk", 'wb') as file:
-            file.write(b'helloworld');
-        with s3.open(os.environ['S3_BUCKET'] + "/testfile_klasjflkjasflk", 'rb') as file:
-            assert(file.read() == b'helloworld')
