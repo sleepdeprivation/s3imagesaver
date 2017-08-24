@@ -15,7 +15,7 @@ In addition the key used for hashing the filenames is not secure, and should not
 
 ## Installing
 
-You will need `docker` and `docker-compose`
+You will need `docker` and `docker-compose`. Then you should just be able to run `docker-compose up` like normal. An api route for file upload is exposed on localhost port 5000, and if you don't have some kind of gateway (?) with a firewall between you and the internet, the api will be exposed to the world. Be careful
 
 ## S3 Creds
 
