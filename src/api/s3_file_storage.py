@@ -108,4 +108,4 @@ class S3FileStorage():
         return hashDict;
 
     def deleteFileByHash(self, filename):
-        
+        pass
