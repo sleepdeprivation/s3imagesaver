@@ -5,6 +5,9 @@ import os
 import warnings
 
 class TestBucketOperations(unittest.TestCase):
+    """
+        Ensure we can read and write to the S3 bucket
+    """
 
     def setUp(self):
         """
