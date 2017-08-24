@@ -70,7 +70,7 @@ class TestS3FileStorage(unittest.TestCase):
         s3store0.database.fileHashes.delete_many({}); # wipe the collection
         s3store0.hashFileAndLog(testFileName)
         hashDict = s3store0.getHashByFilename(testFileName)
-        self.assertEqual(testString, hashDict['hashedFile'])
+        self.assertEqual(testHash, hashDict['hashedFile'])
 
 
 if __name__ == '__main__':
