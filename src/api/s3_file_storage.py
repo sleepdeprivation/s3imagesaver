@@ -123,8 +123,8 @@ class S3FileStorage():
         bytes = stream.read();
         hash = self.hashBytes(bytes);
         meta = {'ContentType': 'image/'+extension}
-        self.writeBytesToS3Bucket(bytes, hash + "." + extension, meta);
-        self.logFileToDB(filename, hash + "." + extension);
+        self.writeBytesToS3Bucket(bytes, hash, meta);
+        self.logFileToDB(filename, hash);
         # unnecessary to hit the db again, but makes me feel better what with
         # the file extension hacks above
         return self.getHashByFilename(filename)['hashedFile'];
