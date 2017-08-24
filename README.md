@@ -7,7 +7,7 @@ Contains a `docker-compose.yml` that will set up a mongo/flask/redis environment
 
 A flask api is provided with an `/upload/` POST route which will allow uploads of arbitrary images (must have an extension that looks like an image). The upload will be saved in the specified s3 bucket and will return a url. The original image name will also be saved in the mongo database.
 
-# Security!
+# Security Warning!
 
 This is by no means production ready. Just off the top of my head, file sizes should be checked (don't know if flask/restplus/whatever does this by default). Also many things are not generic enough.
 
