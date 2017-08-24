@@ -11,7 +11,7 @@ A flask api is provided with an `/upload/` POST route which will allow uploads o
 
 This is by no means production ready. Just off the top of my head, file sizes should be checked (don't know if flask/restplus/whatever does this by default). Also many things are not generic enough.
 
-In addition the key used for hashing the filenames is not secure, and should not be used in production. In the future this should be moved to .env as an environment variable and a warning should be given or an error thrown if it doesn't get changed.
+In addition the key used for hashing the filenames is not secure, and should not be used in production. In the future this should be moved to `.env` as an environment variable and a warning should be given or an error thrown if it doesn't get changed.
 
 ## Installing
 
