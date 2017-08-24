@@ -91,6 +91,18 @@ class S3FileStorage():
         s3 = s3fs.S3FileSystem(anon=False, key=os.environ['S3_KEY'], secret=os.environ['S3_SECRET'])
         s3.put(sourceFile, bucket_name + "/" + hashedFile);
 
+    def writeBytesToS3Bucket(self, bytes, hashedFile, meta):
+        """
+            write the bytes given in bytes to s3
+        """
+        bucket_name = os.environ['S3_BUCKET'];
+        s3 = s3fs.S3FileSystem(anon=False, key=os.environ['S3_KEY'], secret=os.environ['S3_SECRET'])
+        remoteFile = bucket_name + "/" + hashedFile;
+        with s3.open(remoteFile, mode='wb') as f:
+            f.write(bytes);
+
+        s3.setxattr(remoteFile, copy_kwargs=meta)
+
     def hashFileAndLog(self, filename):
         """
             Perform the hash on the contents of the file, then write the file to
@@ -99,6 +111,24 @@ class S3FileStorage():
         hashedFile = self.hashFile(filename);
         self.writeFileToS3Bucket(filename, hashedFile);
         self.logFileToDB(filename, hashedFile);
+
+    def hashStreamAndLog(self, stream, filename, extension):
+        """
+            Given a stream hash it and send it to s3
+            Then log it in the mongodb
+            This function preserves the extension in an ugly way,
+            not sure that's the right thing to do...
+            Now it assumes an image! Getting less and less general...
+        """
+        bytes = stream.read();
+        hash = self.hashBytes(bytes);
+        meta = {'ContentType': 'image/'+extension}
+        self.writeBytesToS3Bucket(bytes, hash + "." + extension, meta);
+        self.logFileToDB(filename, hash + "." + extension);
+        # unnecessary to hit the db again, but makes me feel better what with
+        # the file extension hacks above
+        return self.getHashByFilename(filename)['hashedFile'];
+
 
     def getHashByFilename(self, filename):
         """
